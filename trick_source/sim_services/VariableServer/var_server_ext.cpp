@@ -439,6 +439,19 @@ extern "C" void var_server_set_port(unsigned short port) {
 
 /**
  * @relates Trick::VariableServer
+ * @copydoc Trick::VariableServer::set_socket_priority
+ * C wrapper Trick::VariableServer::set_socket_priority
+ */
+extern "C" void var_server_set_socket_priority(unsigned short socket_priority) {
+#ifndef __APPLE__
+    the_vs->get_listen_thread().set_socket_priority(socket_priority);
+#else
+    message_publish(MSG_ERROR,"var_server_set_socket_priority not available on MacOS\n") ;
+#endif
+}
+
+/**
+ * @relates Trick::VariableServer
  * @copydoc Trick::VariableServer::set_listen_socket
  * C wrapper Trick::VariableServer::set_listen_socket
  */
